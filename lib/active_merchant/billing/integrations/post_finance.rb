@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + '/post_finance/common.rb'
 require File.dirname(__FILE__) + '/post_finance/helper.rb'
 require File.dirname(__FILE__) + '/post_finance/notification.rb'
 
@@ -24,8 +25,8 @@ module ActiveMerchant #:nodoc:
           end
         end
 
-        def self.notification(post)
-          Notification.new(post)
+        def self.notification(post, options={})
+          Notification.new(post, options)
         end
       end
     end

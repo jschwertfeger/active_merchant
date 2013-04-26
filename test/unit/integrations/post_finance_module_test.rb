@@ -4,7 +4,7 @@ class PostFinanceModuleTest < Test::Unit::TestCase
   include ActiveMerchant::Billing::Integrations
 
   def test_notification_method
-    assert_instance_of PostFinance::Notification, PostFinance.notification('name=cody')
+    assert_instance_of PostFinance::Notification, PostFinance.notification('name=cody', secret: 'passw0rd')
   end
 
   def test_test_mode

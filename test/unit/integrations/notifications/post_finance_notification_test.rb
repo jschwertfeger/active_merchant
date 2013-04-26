@@ -12,7 +12,7 @@ class PostFinanceNotificationTest < Test::Unit::TestCase
   def test_accessors
     assert @post_finance.complete?
     assert_equal 'Completed', @post_finance.status
-    assert_equal '123', @post_finance.transaction_id
+    assert_equal '654321', @post_finance.transaction_id
     assert_equal '9.90', @post_finance.gross
     assert_equal 'CHF', @post_finance.currency
     assert !@post_finance.test?
@@ -35,19 +35,19 @@ class PostFinanceNotificationTest < Test::Unit::TestCase
   def test_status_completed
     notification = PostFinance::Notification.new(http_raw_data, :secret => SECRET)
     assert_equal 'Completed', notification.status
-    notification = PostFinance::Notification.new(http_raw_data.sub(/status=5/, 'status=9'), :secret => SECRET)
+    notification = PostFinance::Notification.new(http_raw_data.sub(/STATUS=5/, 'STATUS=9'), :secret => SECRET)
     assert_equal 'Completed', notification.status
   end
 
   def test_status_pending
-    notification = PostFinance::Notification.new(http_raw_data.sub(/status=5/, 'status=51'), :secret => SECRET)
+    notification = PostFinance::Notification.new(http_raw_data.sub(/STATUS=5/, 'STATUS=51'), :secret => SECRET)
     assert_equal 'Pending', notification.status
-    notification = PostFinance::Notification.new(http_raw_data.sub(/status=5/, 'status=91'), :secret => SECRET)
+    notification = PostFinance::Notification.new(http_raw_data.sub(/STATUS=5/, 'STATUS=91'), :secret => SECRET)
     assert_equal 'Pending', notification.status
   end
 
   def test_status_failed
-    notification = PostFinance::Notification.new(http_raw_data.sub(/status=5/, 'status=0'), :secret => SECRET)
+    notification = PostFinance::Notification.new(http_raw_data.sub(/STATUS=5/, 'STATUS=0'), :secret => SECRET)
     assert_equal 'Failed', notification.status
   end
 
@@ -66,7 +66,7 @@ class PostFinanceNotificationTest < Test::Unit::TestCase
             'ED' => '0215',
             'TRXDATE' => '12/25/13',
             'CN' => 'Joe+Doe',
-            'SHASIGN' => 'E6BFE18FB9A2E58CE6A2725A1E017ADC709E6910C7B7EDBEE9A19C364B73E6CD'}
+            'SHASIGN' => 'DBD771EF1CA2FBCCB6A6ECA6D09E8B393C3270D9D4AB40897756ECD1F498BE92'}
     data = data.map { |key, value| "#{key}=#{value}" }.join('&')
     notification = PostFinance::Notification.new(data, :secret => SECRET)
     assert notification.acknowledge

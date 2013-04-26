@@ -38,11 +38,9 @@ module ActiveMerchant #:nodoc:
 
           def status
             case params['STATUS'].to_i
-              when 5
-              when 9
+              when 5, 9
                 'Completed'
-              when 51
-              when 91
+              when 51, 91
                 'Pending'
               else
                 'Failed'
